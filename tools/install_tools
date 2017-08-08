@@ -1,0 +1,49 @@
+#!/bin/bash
+#
+# Responsible to install the FIAP environment tool
+#
+
+
+echo "Installing general tools"
+apt-get install -y \
+	vim  \
+	wget \
+	nano \
+	curl \
+	sudo \
+	bash-completion \
+	build-essential 
+
+echo "[hosts.file] Creating the dns configuration"
+echo "
+# This was generated during the vagrant provisioner
+192.168.200.50	devops.fiap.com.br devops
+192.168.200.100 docker.fiap.com.br docker
+" >> /etc/hosts
+
+echo "Add external dns servers"
+echo "
+# This line was generated during the vagrant provisioner
+nameserver 8.8.8.8
+nameserver 8.8.4.4
+" >> /etc/resolv.conf 
+
+echo "Change root password to fiap/fiap"
+(echo fiap | echo fiap ) | passwd root
+
+
+echo "Creating the fiap user with password fiap"
+if ! useradd -m fiap -s '/bin/bash'; then
+	echo "Could not create the user fiap"
+	echo "Try to log in with the user/password vagrant/vagrant"
+else
+	(echo fiap | echo fiap ) | passwd fiap 
+fi
+
+echo "Configuring sudoers file"
+echo "
+# This file was genrated during the vagrant provisioner
+fiap ALL=(ALL:ALL) NOPASSWD: ALL
+" >> /etc/sudoers.d/fiap
+
+
