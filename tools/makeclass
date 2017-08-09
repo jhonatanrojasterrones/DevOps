@@ -86,7 +86,7 @@ case $1 in
 		fi
 
 		echo "Installing ssh pass file"
-		if ! apt-get install -y ssh-pass; then
+		if ! apt-get install -y sshpass; then
 			echo "Could not install the ssh-pass"
 			exit 6
 		fi	
@@ -94,12 +94,13 @@ case $1 in
 		echo "Configure the generated ssh keys"
 		echo "fiap" > /tmp/.vhMM
 
-		HOST='fiap@192.168.200.50 fiap@192.168.200.100 root@192.168.25.50 root@192,168.200.100'
+		HOST='fiap@192.168.200.50 fiap@192.168.200.100 root@192.168.200.50 root@192.168.200.100'
 		for host in $HOST; do
 			if ! sshpass -f /tmp/.vhMMi ssh-copy-id -i /etc/keys/sshkey.pub $host; then
 				echo "Could not copy the sshkey: $host"
 			fi
 		done
+
 
 		echo "Installing ansible package"
 		if ! apt-get install -y ansible; then
@@ -107,7 +108,7 @@ case $1 in
 			exit 7
 		fi
 
-		echo "Configure the ansible structu"
+		echo "Configure the ansible structure"
 		if ! mkdir -p /etc/ansible/playbooks/{common,homolog,production} \
 					  /etc/ansible/roles; then
 			echo "Could not create the ansible structure"
@@ -126,7 +127,7 @@ devops.dexter.com.br
 [docker]
 docker.dexter.com.br
 " > /etc/ansible/hosts
-		if [[ -f '/etc/ansible/hosts' ]]; then
+		if [[ ! -f '/etc/ansible/hosts' ]]; then
 			echo "Not able to found the ansible host file"
 			exit 9
 		fi
@@ -154,7 +155,8 @@ docker.dexter.com.br
   command: puppet cert clean {{ certificatename }}.dexter.com.br
   when: certificated is defined
   ignore_errors: yes
-"
+" > /etc/ansible/roles/puppet/tasks/main.yaml
+
 		else
 			echo "Could not create the roles"
 			exit 10
