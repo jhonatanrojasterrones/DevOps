@@ -252,18 +252,17 @@ deb-src https://packages.gitlab.com/gitlab/gitlab-ce/debian/ jessie main
 
 	jenkins)
 
-		apt-get update && \
-			apt-get install -y openjdk-7-jre openjdk-7-jre-headless
-
-		echo 'deb http://pkg.jenkins-ci.org/debian binary/' > /etc/apt/sources.list.d/jenkins.list
+		echo 'deb http://ppa.launchpad.net/webupd8team/java/ubuntu xenial main' > /etc/apt/sources.list.d/java.list
+		apt-get update; \
+			apt-get install oracle-java8-installer
 
 		wget -q -O - http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key | apt-key add -
 		
+		echo 'deb http://pkg.jenkins-ci.org/debian binary/' > /etc/apt/sources.list.d/jenkins.list
 		apt-get update && \
 			apt-get install jenkins
 
 		systemctl status jenkins
-
 		# end jenkins
 		;;
 
