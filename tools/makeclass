@@ -231,12 +231,11 @@ deb https://packages.gitlab.com/gitlab/gitlab-ce/debian/ jessie main
 deb-src https://packages.gitlab.com/gitlab/gitlab-ce/debian/ jessie main 
 " > /etc/apt/sources.list.d/gitlab.list
 
-
 		echo "Import gitlab key"
 		curl https://packages.gitlab.com/gpg.key | apt-key add -
 
 		echo "installing gitlab"
-		apt-get upadte && \
+		apt-get update; \
 			apt-get install gitlab-ce
 
 		echo "Update jenkins configuration"
