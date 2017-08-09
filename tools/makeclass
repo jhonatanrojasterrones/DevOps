@@ -36,7 +36,8 @@ case $1 in
 		fi
 
 		echo "Importing the docker GPG key"
-		if ! curl -fsSL https://yum.dockerproject.org/gpg | apt-key add -; then
+		# if ! curl -fsSL https://yum.dockerproject.org/gpg | apt-key add -; then
+		if ! curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add -; then
 			echo "Could not import the docker GPG key"
 		fi
 
@@ -47,13 +48,9 @@ case $1 in
 		fi
 
 		echo "Installing docker engine"
-		if ! apt-get update && apt-get install -y docker-engine; then
-			echo "Could not install docker-engine"
-			echo "please validate your internet connectivity"
-			echo "and the steps listed and logged above"
-			exit 6
-		fi
-		
+		apt-get update \
+			apt-get install -y docker-ce
+
 		systemctl status docker
 
 		LINE
