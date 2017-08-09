@@ -46,4 +46,8 @@ echo "
 fiap ALL=(ALL:ALL) NOPASSWD: ALL
 " >> /etc/sudoers.d/fiap
 
-
+echo "Installing the makeclass tools"
+if ! cp /vagrant/tools/makeclass /bin/makeclass; then
+	echo "Could not install the makeclass tool for class automation"
+	exit 1
+fi

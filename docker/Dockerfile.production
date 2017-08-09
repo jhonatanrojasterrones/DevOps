@@ -1,0 +1,12 @@
+FROM debian 
+
+RUN apt-get update && \
+	apt-get install -y vim curl wget ssh && \
+	wget https://apt.puppetlabs.com/puppetlabs-release-precise.deb && \
+	dpkg -i puppetlabs-release-precise && \
+	apt-get update && apt-get install -y puppet && \
+	sed -i 's/templatedir/\# templatedir/g' /etc/puppet/puppet.conf && \ 
+	echo "environment=master" >> /etc/puppet/puppet.conf && \
+	echo "master=puppet" >> /etc/puppet/puppet.conf;
+
+
