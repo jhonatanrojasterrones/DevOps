@@ -20,7 +20,6 @@ Vagrant.configure("2") do |config|
 		end
 
 		devops.vm.provision "shell", path: "tools/install_tools"
-		devops.vm.provision "shell", path: "devops/provisioner.sh"
 	end
 
 	##
@@ -43,6 +42,5 @@ Vagrant.configure("2") do |config|
 		end
 
 		docker.vm.provision "shell", path: "tools/install_tools"
-		docker.vm.provision "shell", path: "docker/provisioner.sh"
 	end
 end

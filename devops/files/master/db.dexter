@@ -1,0 +1,16 @@
+$TTL  86400
+@   IN    SOA   ns1.dexter.com.br. postmaster.dexter.com.br. (
+            1   ; Serial
+       604800   ; Refresh
+        86400   ; Retry
+      2419200   ; Expire
+        86400 ) ; Negative Cache TTL
+
+@                 IN    NS    ns1.dexter.com.br.
+
+ns1               IN    A     192.168.200.5
+
+devops            IN    A     192.168.200.50
+docker            IN    A     192.168.200.100
+puppet            IN    CNAME devops
+

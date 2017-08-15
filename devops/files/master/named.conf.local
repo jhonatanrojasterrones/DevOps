@@ -1,0 +1,11 @@
+// Infra Agil
+
+zone "dexter.com.br" {
+   type master;
+   file "db.dexter";
+};
+
+zone "devops.com.br" {
+	type master;
+	file "db.devops";
+};

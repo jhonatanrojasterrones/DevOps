@@ -18,6 +18,13 @@ function LINE() {
 }
 
 case $1 in
+	self-update)
+		apt-get install -y git
+		mv /vagrant /vagrant.git
+		git clone https://github.com/jhonatanrojasterrones/DevOps -b master /vagrant 
+
+		;;
+
 	docker)
 		echo "Start docker settings"
 
